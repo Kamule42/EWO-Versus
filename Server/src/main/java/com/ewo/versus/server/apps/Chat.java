@@ -1,6 +1,7 @@
 package com.ewo.versus.server.apps;
 
 import com.ewo.versus.server.App;
+import com.ewo.versus.server.Config;
 import com.ewo.versus.server.Server;
 import java.util.HashMap;
 import java.util.Map;
@@ -114,7 +115,7 @@ public class Chat extends App {
     protected JsonNode checkKey(String id) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("id", id);
-        params.put("key", "CHANGER LA CLEF");
+        params.put("key", Config.chat_key);
         
         return this.sendPostHttpRequestJSon("client/chat/check_token", params);
     }
