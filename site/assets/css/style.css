@@ -112,10 +112,9 @@ label{
     background-color : white;
     height: 100%;
     border-right:1px solid gray;
+    float: left;
 }
 
 .right_content{
-    width:100%;
-    float : right;
 }
 

@@ -28,7 +28,7 @@ if ( ! function_exists('anchor_intern'))
 		}
 
 		return 
-        '<a href="'.$site_url.'" onclick="anchor_intenr(\''.$site_url.'\');return false;" '.$attributes.'>'.$title.'</a>';
+        '<a href="'.$site_url.'" onclick="anchor_intern(\''.$site_url.'\');return false;" '.$attributes.'>'.$title.'</a>';
 	}
 }
 ?>

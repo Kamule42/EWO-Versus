@@ -21,5 +21,11 @@ class Groupe_Model extends CI_Model {
             $r[] = new GroupePerso($res->id, $res->nom, $utilisateur_id);
         return $r;
     }
+    
+    public function ajouter($id, $nom){
+        $this->db->set('utilisateur_id', $id)
+                    ->set('nom', $nom)
+                    ->insert($this->table);
+    }
 }
 ?>

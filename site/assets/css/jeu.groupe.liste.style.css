@@ -1,11 +1,18 @@
-.liste_groupe{
-    list-style: none;
-}
-
 .left_panel{
     width: 300px;
 }
+
+.left_panel form p {
+    position:relative;
+    padding:0px;
+    margin:0px;
+}
+
+.left_panel label  {
+    position:absolute; top:3; left:5
+}
+
 .right_content{
     margin-left : 300px;
-    background-color: red;
+    padding : 25px;
 }

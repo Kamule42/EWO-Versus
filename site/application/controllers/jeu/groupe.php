@@ -43,24 +43,14 @@ class Groupe extends CI_Controller {
                     'groupes' => $this->groupe_model->getGroupList($this->session->userdata('utilisateur.id'))),
                 true);
     }
-
-    /**
-     * Afficher la liste et un formulaire de création
-     * @param type $methode permet d'utiliser la navigation ajax si activé
-     */
-    public function creer($methode = ''){
-        if($methode == 'ajax'){
-            die($this->creer_intern());
-        }
-        $this->display($this->creer_intern());
-    }
     
-    protected function creer_intern(){
-        return
-                $this->load->view('jeu/groupe/creer_view',
-                    array(),
-                true).
-                $this->liste_intern();
+    public function creer(){
+        if($this->checkNomIntern('nom')){
+            $this->groupe_model->ajouter(
+                    $this->session->userdata('utilisateur.id'),
+                    $this->input->post('nom')
+                );
+        }
     }
     
     /**
@@ -77,6 +67,41 @@ class Groupe extends CI_Controller {
         $data['log'] = true;
         $data['utilisateur_id'] = $this->session->userdata('utilisateur.id');
         $this->load->view('main_view',$data);
+    }
+    
+    public function checkNom(){
+        die($this->checkNomIntern('val'));
+    }
+    
+    private function checkNomIntern($v){
+         $this->load->library('form_validation');
+        
+        //Valide the form
+        $this->form_validation->set_rules(
+                $v, 'nom', 
+                'trim|required|min_length[5]|max_length[100]encode_php_tags|xss_clean|callback_groupe_name_check'
+        );
+        
+        if ($this->form_validation->run() == true) {
+            return 'true';
+        }
+        return form_error($v);
+    }
+    
+    function groupe_name_check($str){
+        $resultat = $this->db->select('id')
+                ->from('groupe')
+                ->where(array(
+                    'utilisateur_id' => $this->session->userdata('utilisateur.id'),
+                    'nom' => $str
+                    ))
+                ->limit(1)
+                ->get()
+                ->result();
+        if(count($resultat) != 1)
+            return true;
+        $this->form_validation->set_message('groupe_name_check', 'Vous avez déjà un groupe du nom de "'.$str.'"');
+        return false;
     }
 }
 
