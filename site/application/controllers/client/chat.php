@@ -3,6 +3,8 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
+require('application/config/api_config.php');
+
 /**
  * Description of Connexion
  *
@@ -20,8 +22,7 @@ class Chat extends CI_Controller {
     }
 
     public function check_token() {
-
-        $key = 'CHANGER LA CLEF';
+        $key = ApiConfig::$api_key;
 
         $this->form_validation->set_rules('id', '', 'trim|required|is_natural');
         $this->form_validation->set_rules('key', '', 'trim|required');
