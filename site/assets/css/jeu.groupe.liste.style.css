@@ -1,0 +1,11 @@
+.liste_groupe{
+    list-style: none;
+}
+
+.left_panel{
+    width: 300px;
+}
+.right_content{
+    margin-left : 300px;
+    background-color: red;
+}

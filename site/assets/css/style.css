@@ -1,0 +1,121 @@
+/* 
+    Document   : style
+    Created on : 27 mars 2012, 12:00:52
+    Author     : Benjamin Herbomez <benjamin.herbomez@esial.com>
+
+*/
+
+@import "chat.css";
+
+body, html{
+    padding: 0px;
+    margin: 0px;
+}
+
+body{
+    background-color:#ffffff;
+    background-image: -moz-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
+    background-image: -webkit-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
+    background-image: -o-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
+    background-image: -ms-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
+    background-image: radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
+}
+
+a{
+    text-decoration: none;
+}
+
+/* Divs */
+
+#toolBox, #body{
+    box-shadow: 0px 5px 20px 5px rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.7);
+}
+
+#toolBox{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    
+    width:70%;
+    height:7%;
+    
+    border: 1px solid black;
+    border-top:0px;
+    border-right:0px;
+    border-bottom-left-radius:10px;
+    
+    padding: 5px;
+}
+
+label{
+    display:block;
+    width : 100px;
+    float : left;
+}
+
+#log_info{
+    float : left;
+}
+
+
+#log{
+    margin-left : 5%; 
+}
+
+#log a, #log .mini{
+    font-size: 0.8em;
+}
+
+#body{
+    width : 100%;
+    height : 82%;
+    
+    position: absolute;
+    top:14%;
+    
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    
+    
+}
+
+
+
+/*****************
+------ class -----
+*****************/
+
+.center_content{
+    border : 1px solid black;
+    border-radius : 5px;
+    
+    display:inline-block;
+    vertical-align:middle;
+    text-align: left;
+    margin-top : 25px;
+    
+    background-color: white;
+    padding : 25px;
+}
+
+.center_content fieldset{
+    border-right : none;
+    border-bottom: none;
+}
+
+.content_padding{
+    padding : 30px;
+}
+
+.left_panel{
+    background-color : white;
+    height: 100%;
+    border-right:1px solid gray;
+}
+
+.right_content{
+    width:100%;
+    float : right;
+}
+

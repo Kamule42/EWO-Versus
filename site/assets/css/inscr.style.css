@@ -1,0 +1,39 @@
+#inscr_tooltip{
+    position : absolute;
+    
+    width   : 223px;
+    
+    display : none;
+}
+
+#inscr_tooltip_right, #inscr_tooltip_left{
+    display: table-cell;
+    height  : 52px;
+}
+
+#inscr_tooltip_left{
+    width: 20px;
+    
+    background-image:url(left_arrow_border.png);
+    background-position: right center;
+    background-repeat: repeat-y;
+}
+
+#inscr_tooltip_right{
+    width : 200px; 
+    border-bottom : 1px solid black;
+    border-top : 1px solid black;
+    border-right : 1px solid black;
+    text-align : center;
+    vertical-align: middle;
+    
+    background-color: white;
+}
+
+#inscr_descr{
+    width : 350px;
+}
+
+.center_content label{
+    width : 140px;
+}

@@ -1,0 +1,53 @@
+#index_right{
+    float : right;
+    height : 100%;
+    width : 220px;
+    display: table;
+}
+
+#index_main{
+    overflow: auto;
+    height:100%;
+}
+
+.index_right_link{
+    display: table-row;
+    width : 220px;
+    cursor: pointer;
+}
+
+.index_right_link_txt{
+    width : 200px;
+    
+    border-bottom : 1px solid black;
+    text-align : center;
+    display: table-cell;
+    vertical-align: middle;
+    
+    background-color: white;
+    
+    font-size: 1.5em;
+}
+
+.index_right_link_img{
+    height : 100%;
+    width: 20px;
+    
+    background-image:url(left_border.png);
+    background-position: right center;
+    background-repeat: repeat-y;
+}
+
+.index_right_link:hover .index_right_link_img, .index_right_link_selected  .index_right_link_img{
+
+    background-image:url(left_arrow_border.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+    
+}
+
+
+/***** pas de bord pour le dernie ******/
+.index_right_link:last-child div{
+    border-bottom : none;
+}

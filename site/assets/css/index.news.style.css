@@ -1,0 +1,10 @@
+.news{
+    border:1px solid black;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.news_titre{
+    margin-bottom : 10px;
+}
+
