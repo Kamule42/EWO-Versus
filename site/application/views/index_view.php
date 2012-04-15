@@ -1,5 +1,3 @@
-<link href="<?php echo css_url('index.style'); ?>.less" rel="stylesheet/less" type="text/css" />
-
 <script type="text/javascript">
 $(window).load(function(){
     var current = $('.index_right_link_selected');
