@@ -6,7 +6,6 @@
         var error_ajax = '<?php echo img_url('ajax-error.png');?>';
     -->
 </script>
-<link href="<?php echo css_url('inscr.style'); ?>.css" rel="stylesheet" />
 
 <div id="creer_tooltip">
     <div id="inscr_tooltip_left">&nbsp;</div>

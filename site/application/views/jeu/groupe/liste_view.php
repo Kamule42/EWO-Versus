@@ -1,4 +1,3 @@
-<link href="<?php echo css_url('jeu.groupe.liste.style'); ?>.css" rel="stylesheet" />
 <script type="text/javascript" src="<?php echo js_url('jquery/jquery.infieldlabel');?>"></script>
 <script type="text/javascript" src="<?php echo js_url('groupe');?>"></script>
 
@@ -17,7 +16,8 @@
         <?php
             foreach($groupes as $g){
                 echo '
-            ',$g->getNom(),'<br />';
+            ',
+            anchor_intern('jeu/groupe/view_groupe/'.$g->getId(),$g->getNom()) ,'<br />';
             }
         ?> 
             <br />

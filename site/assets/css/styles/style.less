@@ -5,7 +5,14 @@
 
 */
 
-@import "chat.css";
+
+/* Déclaration */
+@main-color1: #ffffff;
+@main-color2: #cfdbe6;
+@border-color: gray;
+
+
+@import 'chat.less';
 
 body, html{
     padding: 0px;
@@ -13,12 +20,12 @@ body, html{
 }
 
 body{
-    background-color:#ffffff;
-    background-image: -moz-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
-    background-image: -webkit-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
-    background-image: -o-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
-    background-image: -ms-radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
-    background-image: radial-gradient(50% 50%, ellipse closest-side, #ffffff, #cfdbe6 100%);
+    background-color: @main-color1;
+    background-image: -moz-radial-gradient(50% 50%, ellipse closest-side, @main-color1, @main-color2 100%);
+    background-image: -webkit-radial-gradient(50% 50%, ellipse closest-side, @main-color1, @main-color2 100%);
+    background-image: -o-radial-gradient(50% 50%, ellipse closest-side, @main-color1, @main-color2 100%);
+    background-image: -ms-radial-gradient(50% 50%, ellipse closest-side, @main-color1, @main-color2 100%);
+    background-image: radial-gradient(50% 50%, ellipse closest-side, @main-color1, @main-color2 100%);
 }
 
 a{
@@ -40,7 +47,7 @@ a{
     width:70%;
     height:7%;
     
-    border: 1px solid black;
+    border: 1px solid @border-color;
     border-top:0px;
     border-right:0px;
     border-bottom-left-radius:10px;
@@ -74,8 +81,8 @@ label{
     position: absolute;
     top:14%;
     
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid @border-color;
+    border-bottom: 1px solid @border-color;
     
     
 }
@@ -95,7 +102,7 @@ label{
     text-align: left;
     margin-top : 25px;
     
-    background-color: white;
+    background-color: @main-color1;
     padding : 25px;
 }
 
@@ -111,7 +118,7 @@ label{
 .left_panel{
     background-color : white;
     height: 100%;
-    border-right:1px solid gray;
+    border-right:1px solid @border-color;
     float: left;
 }
 

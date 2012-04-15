@@ -38,7 +38,7 @@
         
    
         
-        <link href="<?php echo css_url('style'); ?>.css" rel="stylesheet" />
+        <link href="<?php echo css_url('master'); ?>.less" rel="stylesheet/less" type="text/css" />
 
 
     </head>
@@ -66,3 +66,5 @@
     </div>';
         ?>
     </body>
+    <script src="<?php echo js_url('less'); ?>"></script>  
+</html>

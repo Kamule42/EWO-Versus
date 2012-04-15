@@ -1,4 +1,4 @@
-<link href="<?php echo css_url('index.style'); ?>.css" rel="stylesheet" />
+<link href="<?php echo css_url('index.style'); ?>.less" rel="stylesheet/less" type="text/css" />
 
 <script type="text/javascript">
 $(window).load(function(){

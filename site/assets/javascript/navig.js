@@ -1,7 +1,7 @@
 function anchor_intern(uri){
     if(uri.charAt(uri.length) != '/')
         uri += '/';
-    navig_load(uri)
+    navig_load(uri);
 }
 
 $(window).bind('popstate', function(event) {

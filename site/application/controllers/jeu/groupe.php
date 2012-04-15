@@ -44,6 +44,22 @@ class Groupe extends CI_Controller {
                 true);
     }
     
+    public function view_groupe($id, $methode = ''){
+        if($methode == 'ajax'){
+            die($this->view_groupe_intern($id));
+        }
+        $this->display($this->view_groupe_intern($id));
+    }
+    
+    protected function view_groupe_intern($id){
+        return $this->liste_intern().
+                $this->load->view('jeu/groupe/groupe_view',
+                array(
+                    'unites' => $this->groupe_model->getGroupeUnite(
+                            $id,$this->session->userdata('utilisateur.id'))),
+                true);
+    }
+    
     public function creer(){
         if($this->checkNomIntern('nom')){
             $this->groupe_model->ajouter(
