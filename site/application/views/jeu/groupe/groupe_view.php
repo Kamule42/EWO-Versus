@@ -38,11 +38,12 @@
                         <td class="grp_tbl_center">',$u->getDes(),'</td>
                         <td class="grp_tbl_center">',$u->getAtk(),'</td>
                         <td class="grp_tbl_center">',$u->getCout(),'</td>
+                        <td class="grp_tbl_center">',form_radio('add_unite_to_groupe_radio',$u->getId()),'</td>
                     </tr>';
                     }
                     ?>
                     <tfoot>
-                        <th colspan="7">
+                        <th colspan="8" class="grp_tbl_right">
                             <?php
                             echo form_open('jeu/groupe/ajouter',
                                     array(
