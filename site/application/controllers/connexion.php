@@ -7,10 +7,13 @@ if (!defined('BASEPATH'))
  *
  * @author Benjamin Herbomez <benjamin.herbomez@esial.com>
  */
-class Connexion extends CI_Controller {
+class Connexion extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
+        
+        $this->log_lvl = MY_Controller::LOG_LVL_NONE;
+        
         $this->load->library('form_validation');
         $this->load->helper(array('form', 'assets', 'url'));
         $this->load->model('forms/LogModel', 'logModel');
@@ -20,10 +23,14 @@ class Connexion extends CI_Controller {
         redirect();
     }
 
+    /**
+     * Fonction de connexion
+     */
     public function connect() {
 
         $form_data = (object) $this->logModel->get_info();
-        //Valide the form
+        
+        //Définition des règles, voir la doc de CI pour plus de détails
         $this->form_validation->set_rules(
                 $form_data->nom['nom'], '"'.$form_data->nom['value'].'"', 'trim|required|min_length[5]|max_length[52]|alpha_dash|encode_php_tags|xss_clean'
         );
@@ -46,6 +53,7 @@ class Connexion extends CI_Controller {
                 else{
                     $this->session->log();
                     $this->session->set_userdata('utilisateur.id',$u->getId());
+                    $this->session->set_userdata('utilisateur.armee_id',$u->getArmee_id());
                     redirect();
                 }
             }
@@ -60,19 +68,23 @@ class Connexion extends CI_Controller {
 	redirect();
     }
 
+    /**
+     * Affichage d'erreur
+     * @param type $error 
+     */
     protected function display_error($error = '') {
-        $this->load->model('appliModel');
-        $data = $this->appliModel->get_info();
-        
         $data_c = $this->logModel->get_info();
         $data_c['wrap'] = true;
         $data_c['error'] = $error;
-        $toolBox = $this->load->view('toolBox/non_connected_view', $data_c, true);
-        $data['views'] = (object) array(
-            'toolBox' => '',
-            'body' => $toolBox);
-
-        $this->load->view('main_view', $data);
+        $this->display($this->load->view('toolBox/non_connected_view', $data_c, true));
+    }
+    
+    
+    public function _remap($method, $params = array()){
+        if($method == 'logout')
+            $this->logout();
+        else
+            parent::_remap ($method, $params);
     }
 
 }

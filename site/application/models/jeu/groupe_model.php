@@ -12,6 +12,7 @@ class Groupe_Model extends CI_Model {
     protected $table        = 'groupe';
     protected $table_grp    = 'groupe_unite';
     protected $table_u      = 'unite';
+    protected $table_ua     = 'unite_arme'; 
     
     /**
      * Donne la liste des groupes d'un utilisateur
@@ -66,6 +67,30 @@ class Groupe_Model extends CI_Model {
                 ->result();
         foreach($resultat as $res)
             $r[] = new Unite ($res->id, $res->nom, $res->unite, $res->pv,
+                    $res->mouv, $res->forcev, $res->des, $res->atk, $res->cout);
+        return $r;
+    }
+    
+    public function getUniteUtilisables($armee_id){
+        $r = array();
+        $resultat = $this->db->select(
+                '
+                u.id    as id,
+                u.nom   as nom,
+                u.pv    as pv,
+                u.mouv  as mouv,
+                u.force as forcev,
+                u.des   as des,
+                u.atk   as atk,
+                u.cout  as cout
+                ')
+                ->from($this->table_u.' u')
+                ->join($this->table_ua.' ua','u.id = ua.unite_id AND ua.arme_id = '.$armee_id)
+                ->order_by('u.nom ASC, u.cout DESC')
+                ->get()
+                ->result();
+        foreach($resultat as $res)
+            $r[] = new Unite ($res->id, '', $res->nom, $res->pv,
                     $res->mouv, $res->forcev, $res->des, $res->atk, $res->cout);
         return $r;
     }

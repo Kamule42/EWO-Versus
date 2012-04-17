@@ -7,12 +7,13 @@ if (!defined('BASEPATH'))
  *
  * @author Benjamin Herbomez <benjamin.herbomez@esial.com>
  */
-class Groupe extends CI_Controller {
+class Groupe extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        if(!$this->session->isLogged())
-            redirect();
+        
+        $this->log_lvl = MY_Controller::LOG_LVL_REQUIRE;
+        
         //Libs
         $this->load->library('form_validation');
         //Helpers
@@ -22,18 +23,15 @@ class Groupe extends CI_Controller {
         $this->load->model('jeu/groupe_model','groupe_model');
     }
 
-    public function index($methode = '') {
-        $this->liste($methode);
+    public function index() {
+        $this->liste();
     }
     
     /**
      *  Afficher seulement la liste
      * @param type $methode permet d'utiliser la navigation ajax si activé
      */
-    public function liste($methode = ''){
-        if($methode == 'ajax'){
-            die($this->liste_intern());
-        }
+    public function liste(){
         $this->display($this->liste_intern());
     }
     
@@ -44,10 +42,7 @@ class Groupe extends CI_Controller {
                 true);
     }
     
-    public function view_groupe($id, $methode = ''){
-        if($methode == 'ajax'){
-            die($this->view_groupe_intern($id));
-        }
+    public function view_groupe($id){
         $this->display($this->view_groupe_intern($id));
     }
     
@@ -56,33 +51,22 @@ class Groupe extends CI_Controller {
                 $this->load->view('jeu/groupe/groupe_view',
                 array(
                     'unites' => $this->groupe_model->getGroupeUnite(
-                            $id,$this->session->userdata('utilisateur.id'))),
+                            $id,$this->session->userdata('utilisateur.id')),
+                    'dispo'  => $this->groupe_model->getUniteUtilisables($this->session->userdata('utilisateur.armee_id'))
+                ),
                 true);
     }
     
     public function creer(){
+        if(!$this->session->isLogged())
+            $this->logError($methode);
+        
         if($this->checkNomIntern('nom')){
             $this->groupe_model->ajouter(
                     $this->session->userdata('utilisateur.id'),
                     $this->input->post('nom')
                 );
         }
-    }
-    
-    /**
-     * Affichage d'une page type avec au centre le contenu de la variable $content
-     * @param type $content 
-     */
-    protected function display($content){
-        $data = $this->appliModel->get_info();
-        
-        $views = array();
-        $views['toolBox'] = $this->load->view('toolBox/connected_view',array(), true);
-        $views['body'] = $content;
-        $data['views'] = (object)$views;
-        $data['log'] = true;
-        $data['utilisateur_id'] = $this->session->userdata('utilisateur.id');
-        $this->load->view('main_view',$data);
     }
     
     public function checkNom(){

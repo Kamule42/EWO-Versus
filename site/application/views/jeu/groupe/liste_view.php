@@ -56,7 +56,7 @@
 <script type="text/javascript">
 <!--
 $(document).ready(function(){
-    $("label").inFieldLabels();
+    $(".left_panel label").inFieldLabels();
 });
 -->
 </script>

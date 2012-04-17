@@ -5,14 +5,14 @@ if (!defined('BASEPATH'))
 /**
  * @author Benjamin Herbomez <benjamin.herbomez@esial.com>
  */
-class Inscription extends CI_Controller{
-public $form_validation = "";
+class Inscription extends MY_Controller{
+
+    public $form_validation = "";
     
     public function __construct() {
         parent::__construct();
         //On ne s'inscrie pas quand on est log
-        if($this->session->isLogged())
-            redirect();
+        $this->log_lvl = MY_Controller::LOG_LVL_NONE;
         
         $this->load->helper(array('form','assets','json'));
         $this->load->model('appliModel');
@@ -20,24 +20,17 @@ public $form_validation = "";
         $this->load->model('forms/LogModel', 'logModel');
     }
 
-    public function index($methode = '') {
-        if($methode == 'ajax'){
-            die($this->index_intern());
-        }
-        $data = $this->appliModel->get_info();
-        
-        $views = array();
-        $views['toolBox'] = $this->load->view('toolBox/non_connected_view',$this->logModel->get_info(), true);
-        $views['body'] = $this->index_intern();
-        
-        $data['views'] = (object)$views;
-        $this->load->view('main_view',$data);
+    public function index() {
+        $this->display($this->index_intern());
     }
     
     private function index_intern(){
         return $this->load->view('inscription/form_view',$this->inscrModel->get_champs(), true);
     }
     
+    /**
+     * Finalisation de la première partie de l'inscription (ajout des données en BDD, envoie de mail, ...)
+     */
     public function finalize(){
         $champs = $this->inscrModel->get_champs();
         if( $this->checkNomIntern($champs['nom']['nom']) && 
@@ -60,38 +53,20 @@ public $form_validation = "";
                     $token
             );
             
-            $this->load->library('email');
-
-            $config['mailtype'] = 'html';
-            $config['smtp_host'] = 'smtp.free.fr';
-            $config['smtp_user'] = 'benjamin.herbomez@free.fr';
-            $config['smtp_pass'] = 'guizmo';
-            $config['smtp_port'] = 25;
-            $this->email->initialize($config);
+            $this->sendInscriptionMail($id, $token);
             
-            $this->email->from('versus.ewo-le-monde.com', 'Ewo Versus Team');
-            $this->email->to($this->input->post($champs['mail']['nom'])); 
-
-            $this->email->subject('Inscription à EWO Versus');
-            $this->email->message('Bonjour '.$this->input->post($champs['nom']['nom']).'
-                
-Merci de suivre ce lien pour finir votre inscription : <a href="'.site_url('inscription/valid/'.$id.'/'.$token).'">valider mon inscription</a>');	
-
-            $this->email->send();
-            
-            $data = $this->appliModel->get_info();
-        
-            $views = array();
-            $views['toolBox'] = $this->load->view('toolBox/non_connected_view',
-                    $this->logModel->get_info(), true);
-            $views['body'] = $this->load->view('inscription/mail_send',array(), true);
-            $data['views'] = (object)$views;
-            $this->load->view('main_view',$data);
+            //Affichage
+            $this->display($this->load->view('inscription/mail_send',array(), true));
         }
         else
             $this->index();
     }
     
+    /**
+     * Validation de l'inscription via un token de base de donnée
+     * @param type $id
+     * @param type $token 
+     */
     public function valid($id,$token){
         $resultat = $this->db->select('token')
                 ->from('inscr_token')
@@ -105,21 +80,23 @@ Merci de suivre ce lien pour finir votre inscription : <a href="'.site_url('insc
             
             $data = $this->appliModel->get_info();
         
-            $views = array();
-            $views['toolBox'] = $this->load->view('toolBox/non_connected_view',
-                    $this->logModel->get_info(), true);
-            $views['body'] = $this->load->view('inscription/fin',array(), true);
-            $data['views'] = (object)$views;
-            $this->load->view('main_view',$data);
+            $this->display($this->load->view('inscription/fin',array(), true));
         }
         else
             redirect();
     }
     
+    /**
+     * Interface d'accès ajax de la vérification de nom
+     */
     public function checkNom(){
         die($this->checkNomIntern('val'));
     }
-    
+    /**
+     * Partie vérification
+     * @param type $v
+     * @return type 
+     */
     private function checkNomIntern($v){
          $this->load->library('form_validation');
         
@@ -134,6 +111,9 @@ Merci de suivre ce lien pour finir votre inscription : <a href="'.site_url('insc
         return form_error($v);
     }
     
+    /**
+     * Interface d'accès ajax de la vérification du nom
+     */
     public function checkMdp(){
         die($this->checkMdpIntern('val'));
     }
@@ -190,6 +170,27 @@ Merci de suivre ce lien pour finir votre inscription : <a href="'.site_url('insc
         
         return $this->form_validation->run();
     }
+
+  
+    /**
+     * Envoie l'email pour dire au bonhomme qu'il est inscrit
+     * @param type $id
+     * @param type $token 
+     */
+    private function sendInscriptionMail($id, $token){
+        $this->load->library('email');
+
+        $this->email->from('versus.ewo-le-monde.com', 'Ewo Versus Team');
+        $this->email->to($this->input->post($champs['mail']['nom'])); 
+
+        $this->email->subject('Inscription à EWO Versus');
+        $this->email->message('Bonjour '.$this->input->post($champs['nom']['nom']).'
+
+Merci de suivre ce lien pour finir votre inscription : <a href="'.site_url('inscription/valid/'.$id.'/'.$token).'">valider mon inscription</a>');	
+
+        $this->email->send();
+    }
+    
 }
 
 ?>

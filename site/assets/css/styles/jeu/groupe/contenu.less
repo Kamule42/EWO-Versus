@@ -1,7 +1,49 @@
+@cell_radius:30px;
+
+#grp_left{
+    width:99%;
+}
+
+#grp_right{
+    display: none;
+    overflow: hidden;
+    border: 1px solid @border-color;
+    border-right :none;
+    text-align:center;
+    margin-top : -1px;
+}
+
+#grp_right .cell{
+    background-color: @main-color1;
+}
+
+
+#grp_right .cell:first-child{
+    background-color: @main-color1;
+}
+
+#grp_right_collapse{
+    vertical-align: middle;
+    padding-left:5px;
+    border-right: 1px solid @border-color;
+    .opacity(0.8);
+    border-top-left-radius:@cell_radius;
+    border-bottom-left-radius:@cell_radius;
+}
+
+.table{
+    width: 100%;
+    height:100%;
+}
+
 .grp_tbl{
     width : 75%;
     border-collapse: collapse;
     float : left;
+}
+
+.grp_tbl tr, .grp_tbl th{   
+    background-color: @main-color1;
 }
 
 .grp_tbl thead{
@@ -28,12 +70,30 @@
 }
 
 .grp_ajouter{
-    margin-left : 80%;
+    position:fixed;
+    right:0;
+    left:30px;
+    height:82%;
+    
+    margin-left:350px;
+    
+    border-top-left-radius:@cell_radius;
+    border-bottom-left-radius:@cell_radius;
 }
 
-.grp_nouveau{
-    position : fixed;
-    display : none;
-    background-color: white;
-    border: 1px solid @border-color;
+
+.grp_tbl img{
+    border:1px solid @border-color;
+    border-radius:15px;
+    border-bottom-right-radius:15px;
+}
+
+.form_ajouter_unite label{
+    float : none;
+    width : auto;
+    display: inline-block;
+}
+
+.form_ajouter_unite img{
+    border:none;
 }

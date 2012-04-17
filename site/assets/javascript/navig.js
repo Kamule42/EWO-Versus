@@ -15,6 +15,11 @@ $(window).bind('popstate', function(event) {
 
 function navig_load(uri){
     $.get(uri+"ajax", function(data) {
+        if(data == 'errorLog'){
+            anchor_intern('http://78.249.2.88:8080/versus/index/index');
+            return;
+        }
+        
         if (history && history.pushState) {
           history.pushState({path:uri}, document.title, uri);
         }
